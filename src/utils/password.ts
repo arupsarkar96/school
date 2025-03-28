@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 
-const saltRounds = 10;
+const saltRounds = 12;
 
 export const generatePassword = (length: number = 8): string => {
     const characters = '0123456789';

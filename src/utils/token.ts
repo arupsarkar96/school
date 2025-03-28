@@ -1,11 +1,11 @@
 import jwt from 'jsonwebtoken';
-import configuration from '../config';
+import configuration from '../config/serverconf';
 
 const SECRET_KEY = configuration.JWT_SECRET
 
 // Function to generate a JWT token
 export const generateToken = (payload: object, expiresIn: string = '1h'): string => {
-    return jwt.sign(payload, SECRET_KEY, { expiresIn });
+    return jwt.sign(payload, SECRET_KEY);
 };
 
 // Function to verify a JWT token
