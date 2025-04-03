@@ -45,7 +45,7 @@ export const studentLogin = async (req: Request, res: Response): Promise<void> =
 
 
     if (typeof enrollment != "number") {
-        const token = generateToken({ id: student.student_id, role: "student", school: student.school_id, class: enrollment?.class_id, session: enrollment?.session_id }, "1y")
+        const token = generateToken({ id: student.student_id, role: "student", school: student.school_id, course: enrollment?.course_id, session: enrollment?.session_id }, "1y")
 
 
         res.status(200).json({
@@ -60,11 +60,11 @@ export const studentLogin = async (req: Request, res: Response): Promise<void> =
                 name: school?.school_name
             },
             token: token,
-            class: {
+            course: {
                 roll: enrollment?.roll,
-                class: enrollment?.class_name,
+                course_name: enrollment?.course_name,
                 session: enrollment?.session_id,
-                class_id: enrollment?.class_id
+                course_id: enrollment?.course_id
             }
         })
     }
@@ -72,6 +72,7 @@ export const studentLogin = async (req: Request, res: Response): Promise<void> =
 
 export const staffLogin = async (req: Request, res: Response): Promise<void> => {
 
+    console.log(req.body)
     const { id, password } = req.body
 
     if (!id || !password) {

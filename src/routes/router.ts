@@ -11,6 +11,8 @@ import notesRouter from "./notes-router";
 import billRouter from "./bill-router";
 import posRouter from "./pos-router";
 import dashboardRouter from "./dashboard-router";
+import expenseRouter from "./expense-router";
+import paymentRouter from "./payment-router";
 
 const router = Router()
 
@@ -20,11 +22,14 @@ router.use("/session", sessionRoute)
 router.use("/login", loginRoute)
 router.use("/student", studentRoute)
 router.use("/enrollment", enrollmentRouter)
-router.use("/class", classRouter)
+router.use("/course", classRouter)
 router.use("/inventory", inventoryRouter)
 router.use("/notes", notesRouter)
 router.use("/invoices", billRouter)
 router.use("/cart", posRouter)
 router.use("/dashboard", dashboardRouter)
+router.use("/expenses", expenseRouter)
+router.use("/payments", paymentRouter)
+
 
 export default router;

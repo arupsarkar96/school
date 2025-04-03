@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { create_class__service, fetch_class__service, fetch_classes__service } from "../services/class-service";
 import { fetch_fees__service, update_fees__service } from "../services/fees-service";
 import { create_subject__service, delete_subject__service, fetch_subject__service } from "../services/subject-service";
+import { fetch_enrollments_by_class__service } from "../services/enrollment-service";
 
 
 export const createClass = async (req: Request, res: Response): Promise<void> => {
@@ -104,9 +105,23 @@ export const createSubject = async (req: Request, res: Response): Promise<void> 
     const classId: number = parseInt(req.params.id)
     const { name } = req.body
 
-    create_subject__service(classId, name)
+    create_subject__service(classId, name.toUpperCase())
     res.status(201).json({
         status: "success",
         message: "Subject created"
     })
+}
+
+export const fetchStudents = async (req: Request, res: Response): Promise<void> => {
+
+    const course: number = parseInt(req.params.id as string)
+    const session: number = parseInt(req.query.session as string)
+
+    const students = await fetch_enrollments_by_class__service(course, session)
+
+    res.status(200).json({
+        students: students
+    })
+
+
 }

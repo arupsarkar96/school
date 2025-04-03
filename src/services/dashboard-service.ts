@@ -22,3 +22,14 @@ export const fetch_dashboard_users__service = async (schoolId: string) => {
         return null
     }
 }
+
+export const fetch_dashboard_expense__service = async (schoolId: string) => {
+    const sql = "SELECT SUM(expense_amount) AS today FROM Expenses WHERE DATE(expense_date) = CURDATE() AND school_id = ?; SELECT SUM(expense_amount) AS month FROM Expenses WHERE DATE(expense_date) >= CURDATE() - INTERVAL 30 DAY AND school_id = ?"
+    try {
+        const [rows] = await database.query(sql, [schoolId, schoolId])
+        return rows
+    } catch (error) {
+        console.error(error)
+        return null
+    }
+}

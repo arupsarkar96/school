@@ -18,7 +18,7 @@ export const create_session__service = async (schoolId: string, startDate: strin
     const dateEnd = new Date(endDate)
     const name = `${dateStart.getFullYear()}-${dateEnd.getFullYear()}`
 
-    const sql = "UPDATE `sessions` SET `status` = 'CLOSED' WHERE school_id = ?; INSERT INTO `sessions` (`school_id`, `session_name`, `start`, `end`, `status`) VALUES (?,?,?,?,?)"
+    const sql = "UPDATE `Sessions` SET `status` = 'CLOSED' WHERE school_id = ?; INSERT INTO `Sessions` (`school_id`, `session_name`, `start`, `end`, `status`) VALUES (?,?,?,?,?)"
 
     try {
         const [rows] = await database.query(sql, [schoolId, schoolId, name, startDate, endDate, 'ACTIVE'])
@@ -39,7 +39,7 @@ export const create_session__service = async (schoolId: string, startDate: strin
 
 export const fetch_active_session__service = async (schoolId: string): Promise<Session | null> => {
 
-    const sql = "SELECT * FROM `sessions` WHERE `school_id` = ? AND `status` = 'ACTIVE'"
+    const sql = "SELECT * FROM `Sessions` WHERE `school_id` = ? AND `status` = 'ACTIVE'"
 
     try {
         const [rows]: [RowDataPacket[], FieldPacket[]] = await database.query(sql, [schoolId])
@@ -52,7 +52,7 @@ export const fetch_active_session__service = async (schoolId: string): Promise<S
 
 export const fetch_session__service = async (sessionId: string): Promise<Session | null> => {
 
-    const sql = "SELECT * FROM `sessions` WHERE `session_id` = ?"
+    const sql = "SELECT * FROM `Sessions` WHERE `session_id` = ?"
 
     try {
         const [rows]: [RowDataPacket[], FieldPacket[]] = await database.query(sql, [sessionId])
@@ -65,7 +65,7 @@ export const fetch_session__service = async (sessionId: string): Promise<Session
 
 export const fetch_all_session__service = async (schoolId: string): Promise<Session[]> => {
 
-    const sql = "SELECT * FROM `sessions` WHERE `school_id` = ? ORDER BY `session_id` DESC"
+    const sql = "SELECT * FROM `Sessions` WHERE `school_id` = ? ORDER BY `session_id` DESC"
 
     try {
         const [rows]: [RowDataPacket[], FieldPacket[]] = await database.query(sql, [schoolId])

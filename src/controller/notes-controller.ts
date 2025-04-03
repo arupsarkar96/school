@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { create_teacher_notes__service, fetch_notes__service, fetch_teacher_notes__service } from "../services/notes-service";
+import { create_teacher_notes__service, delete_teacher_notes__service, edit_teacher_notes__service, fetch_notes__service, fetch_teacher_notes__service } from "../services/notes-service";
 
 
 export const fetchNotes = async (req: Request, res: Response): Promise<void> => {
@@ -45,6 +45,48 @@ export const createTeacherNotes = async (req: Request, res: Response): Promise<v
         res.status(400).json({
             status: "error",
             message: "Try again"
+        })
+    }
+}
+
+export const deleteTeacherNotes = async (req: Request, res: Response): Promise<void> => {
+    const userId: string = req.headers["x-id"] as string;
+    const schoolId: string = req.headers["x-school"] as string;
+    const noteId: number = parseInt(req.params.id)
+
+    const notes = await delete_teacher_notes__service(schoolId, userId, noteId)
+
+    if (notes) {
+        res.status(200).json({
+            status: "success",
+            message: "Note deleted successfully"
+        })
+    } else {
+        res.status(400).json({
+            status: "error",
+            message: "Note delete failed"
+        })
+    }
+}
+
+export const editTeacherNotes = async (req: Request, res: Response): Promise<void> => {
+    const userId: string = req.headers["x-id"] as string;
+    const schoolId: string = req.headers["x-school"] as string;
+    const noteId: number = parseInt(req.params.id)
+    const { course, subject, content } = req.body
+
+
+    const notes = await edit_teacher_notes__service(content, schoolId, userId, noteId)
+
+    if (notes) {
+        res.status(200).json({
+            status: "success",
+            message: "Note updated successfully"
+        })
+    } else {
+        res.status(400).json({
+            status: "error",
+            message: "Note update failed"
         })
     }
 }

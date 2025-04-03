@@ -39,7 +39,7 @@ export const checkOutCart = async (req: Request, res: Response): Promise<void> =
         // Update inventory in parallel for all items
         await Promise.all(
             items.map(async (item) => {
-                await sell_update_inventory__service(item.product_id, item.product_quantity);
+                await sell_update_inventory__service(item.product_id, item.product_quantity, staffId);
             })
         );
 
