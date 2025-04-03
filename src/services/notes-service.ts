@@ -22,7 +22,7 @@ export const fetch_notes__service = async (courseId: number, sessionId: number, 
 
 export const fetch_teacher_notes__service = async (userId: string, page: number): Promise<Note[]> => {
     const offset = page * 10
-    const sql = "SELECT * FROM Notes LEFT JOIN Subjects ON Notes.subject_id = Notes.subject_id WHERE Notes.staff_id = ? ORDER BY note_id DESC LIMIT 10 OFFSET ?"
+    const sql = "SELECT * FROM `Notes` LEFT JOIN `Subjects` ON `Notes`.`subject_id` = `Subjects`.`subject_id` WHERE `Notes`.`staff_id` = ? ORDER BY Notes.note_id DESC LIMIT 10 OFFSET ?"
 
     try {
         const [rows] = await database.query(sql, [userId, offset])
