@@ -17,6 +17,8 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 app.use('/v1', router)
 app.use(express.static('public'))
+app.use('/uploads', express.static('uploads'))
+
 app.all('*', (req, res) => { res.sendStatus(404) })
 
 app.listen(configuration.PORT, '0.0.0.0', () => {

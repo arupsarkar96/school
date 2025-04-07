@@ -1,10 +1,22 @@
 import { Request, Response } from "express";
-import { create_student__service } from "../services/student-service";
+import { create_student__service, fetch_draft_students__service } from "../services/student-service";
 import { fetch_student_bill__service } from "../services/bill-service";
 
 
 
 
+
+export const fetchDraftStudents = async (req: Request, res: Response): Promise<void> => {
+    const schoolId: string = req.headers["x-school"] as string;
+
+    const page: number = parseInt(req.query.page as string) || 0
+    const students = await fetch_draft_students__service(schoolId, page)
+
+    res.status(200).json({
+        students: students,
+        next: students.length == 10 ? page + 1 : 0
+    })
+}
 
 
 export const fetchStudentInvoices = async (req: Request, res: Response): Promise<void> => {

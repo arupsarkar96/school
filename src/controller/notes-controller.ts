@@ -21,7 +21,6 @@ export const fetchTeacherNotes = async (req: Request, res: Response): Promise<vo
     const page: number = parseInt(req.query.page as string) || 0
 
     const notes = await fetch_teacher_notes__service(userId, page)
-
     res.status(200).json({
         notes: notes,
         next: notes.length == 10 ? page + 1 : 0
@@ -31,11 +30,10 @@ export const fetchTeacherNotes = async (req: Request, res: Response): Promise<vo
 export const createTeacherNotes = async (req: Request, res: Response): Promise<void> => {
     const userId: string = req.headers["x-id"] as string;
     const schoolId: string = req.headers["x-school"] as string;
-    const { course, subject, content } = req.body
+    const { course, subject, content, file = null } = req.body
 
 
-    const notes = await create_teacher_notes__service(schoolId, course, subject, userId, content)
-
+    const notes = await create_teacher_notes__service(schoolId, course, subject, userId, content, file)
     if (notes) {
         res.status(201).json({
             status: "success",

@@ -40,6 +40,21 @@ export const create_student__service = async (schoolId: string, name: string, ph
 
 }
 
+export const fetch_draft_students__service = async (schoolId: string, page: number): Promise<Student[]> => {
+    const offset = page * 10
+
+    const sql = "SELECT * FROM `Students` WHERE `school_id` = ? AND status = 'draft' ORDER BY `student_id` DESC LIMIT 10 OFFSET ?"
+
+    try {
+        const [rows]: [RowDataPacket[], FieldPacket[]] = await database.query(sql, [schoolId, offset])
+        return rows as Student[]
+    } catch (error) {
+        console.error(error)
+        return []
+    }
+
+}
+
 
 export const fetch_student__service = async (studentId: string): Promise<Student | null> => {
 

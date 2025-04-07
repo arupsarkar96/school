@@ -13,6 +13,7 @@ import posRouter from "./pos-router";
 import dashboardRouter from "./dashboard-router";
 import expenseRouter from "./expense-router";
 import paymentRouter from "./payment-router";
+import uploadRouter from "./upload-router";
 
 const router = Router()
 
@@ -30,6 +31,7 @@ router.use("/cart", posRouter)
 router.use("/dashboard", dashboardRouter)
 router.use("/expenses", expenseRouter)
 router.use("/payments", paymentRouter)
+router.use("/upload", uploadRouter)
 
 
 export default router;

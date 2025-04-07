@@ -33,13 +33,13 @@ export const fetch_teacher_notes__service = async (userId: string, page: number)
     }
 }
 
-export const create_teacher_notes__service = async (schoolId: string, classId: string, subject: string, userId: string, content: string): Promise<boolean> => {
+export const create_teacher_notes__service = async (schoolId: string, classId: string, subject: string, userId: string, content: string, file: string | null): Promise<boolean> => {
     const currentSession = await fetch_active_session__service(schoolId)
 
-    const sql = "INSERT INTO `Notes` (`school_id`, `session_id`, `course_id`, `subject_id`, `staff_id`, `content`) VALUES (?,?,?,?,?,?)"
+    const sql = "INSERT INTO `Notes` (`school_id`, `session_id`, `course_id`, `subject_id`, `staff_id`, `content`, `file`) VALUES (?,?,?,?,?,?,?)"
 
     try {
-        const [rows] = await database.query(sql, [schoolId, currentSession?.session_id, classId, subject, userId, content])
+        const [rows] = await database.query(sql, [schoolId, currentSession?.session_id, classId, subject, userId, content, file])
         return true
     } catch (error) {
         console.error(error)
