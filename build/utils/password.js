@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.comparePassword = exports.hashPassword = exports.generatePassword = void 0;
 const bcrypt_1 = __importDefault(require("bcrypt"));
-const saltRounds = 10;
+const saltRounds = 12;
 const generatePassword = (length = 8) => {
     const characters = '0123456789';
     let password = '';
