@@ -26,7 +26,7 @@ export interface EnrollmentWithStudent extends Enrollment {
 }
 
 export const fetch_enrollments_by_class__service = async (courseId: number, sessionId: number): Promise<EnrollmentWithStudent[]> => {
-    const sql = "SELECT Enrollments.roll, Students.student_id, Students.student_name, Students.photo FROM `Enrollments` LEFT JOIN `Students` ON Enrollments.student_id = Students.student_id WHERE `course_id` = ? AND `session_id` = ?"
+    const sql = "SELECT Enrollments.roll, Students.student_id, Students.student_name, Students.photo FROM `Enrollments` LEFT JOIN `Students` ON Enrollments.student_id = Students.student_id WHERE `course_id` = ? AND `session_id` = ? ORDER BY Enrollments.roll ASC"
 
     try {
         const [rows]: [RowDataPacket[], FieldPacket[]] = await database.query(sql, [courseId, sessionId])
