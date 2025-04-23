@@ -1,5 +1,23 @@
 import { Request, Response } from "express";
-import { create_teacher_notes__service, delete_teacher_notes__service, edit_teacher_notes__service, fetch_notes__service, fetch_teacher_notes__service } from "../services/notes-service";
+import { create_teacher_notes__service, delete_teacher_notes__service, edit_teacher_notes__service, fetch_notes__service, fetch_notes_by_course__service, fetch_teacher_notes__service } from "../services/notes-service";
+
+
+export const fetchNotesByCourse = async (req: Request, res: Response): Promise<void> => {
+
+    const courseId: number = parseInt(req.params.id)
+    const page: number = parseInt(req.query.page as string) || 0
+
+    const notes = await fetch_notes_by_course__service(courseId, page)
+    const updatedNotes = notes.map(note => ({
+        ...note,
+        subject_name: 'ANNOUNCEMENT' // Replace with the actual value you want to add
+    }));
+
+    res.status(200).json({
+        notes: updatedNotes,
+        next: notes.length == 10 ? page + 1 : 0
+    })
+}
 
 
 export const fetchNotes = async (req: Request, res: Response): Promise<void> => {

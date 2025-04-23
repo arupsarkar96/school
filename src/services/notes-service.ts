@@ -7,6 +7,21 @@ export interface Note {
     subject_name: string
 }
 
+export const fetch_notes_by_course__service = async (courseId: number, page: number): Promise<Note[]> => {
+    const offset = page * 10
+    // const sql = "SELECT * FROM Notes LEFT JOIN Subjects ON Notes.subject_id = Subjects.subject_id WHERE Notes.course_id = ? AND Notes.session_id = ? ORDER BY note_id DESC LIMIT 10 OFFSET ?"
+
+    const sql = "SELECT * FROM Notes WHERE course_id = ? ORDER BY note_id DESC LIMIT 10 OFFSET ?"
+
+    try {
+        const [rows] = await database.query(sql, [courseId, offset])
+        return rows as Note[]
+    } catch (error) {
+        console.error(error)
+        return []
+    }
+}
+
 export const fetch_notes__service = async (courseId: number, sessionId: number, page: number): Promise<Note[]> => {
     const offset = page * 10
     // const sql = "SELECT * FROM Notes LEFT JOIN Subjects ON Notes.subject_id = Subjects.subject_id WHERE Notes.course_id = ? AND Notes.session_id = ? ORDER BY note_id DESC LIMIT 10 OFFSET ?"
