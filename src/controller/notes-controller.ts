@@ -8,13 +8,13 @@ export const fetchNotesByCourse = async (req: Request, res: Response): Promise<v
     const page: number = parseInt(req.query.page as string) || 0
 
     const notes = await fetch_notes_by_course__service(courseId, page)
-    const updatedNotes = notes.map(note => ({
-        ...note,
-        subject_name: 'ANNOUNCEMENT' // Replace with the actual value you want to add
-    }));
+    // const updatedNotes = notes.map(note => ({
+    //     ...note,
+    //     subject_name: 'ANNOUNCEMENT' // Replace with the actual value you want to add
+    // }));
 
     res.status(200).json({
-        notes: updatedNotes,
+        notes: notes,
         next: notes.length == 10 ? page + 1 : 0
     })
 }

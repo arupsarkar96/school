@@ -11,7 +11,7 @@ export const fetch_notes_by_course__service = async (courseId: number, page: num
     const offset = page * 10
     // const sql = "SELECT * FROM Notes LEFT JOIN Subjects ON Notes.subject_id = Subjects.subject_id WHERE Notes.course_id = ? AND Notes.session_id = ? ORDER BY note_id DESC LIMIT 10 OFFSET ?"
 
-    const sql = "SELECT * FROM Notes WHERE course_id = ? ORDER BY note_id DESC LIMIT 10 OFFSET ?"
+    const sql = "SELECT Notes.*, Staffs.staff_name AS subject_name FROM Notes LEFT JOIN Staffs ON Notes.staff_id = Staffs.staff_id WHERE course_id = ? ORDER BY note_id DESC LIMIT 10 OFFSET ?"
 
     try {
         const [rows] = await database.query(sql, [courseId, offset])
